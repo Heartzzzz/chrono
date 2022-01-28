@@ -81,7 +81,7 @@ void affiche_digits()
     }
 }
  
-void afficher_nombre()
+void calc_tps()
 {
     t0 = millis(); //initialisation du t0
     tecoul = millis() - t0;       //decoupage puis soustraction des minutes
