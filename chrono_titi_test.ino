@@ -57,9 +57,6 @@ void setup()
     digitalWrite(latch[3], LOW);
     digitalWrite(latch[4], LOW);
     digitalWrite(latch[5], LOW);
-
-    t0 = millis(); //initialisation du t0
-
 }
 
 void loop ()
@@ -86,6 +83,7 @@ void affiche_digits()
  
 void afficher_nombre()
 {
+    t0 = millis(); //initialisation du t0
     tecoul = millis() - t0;       //decoupage puis soustraction des minutes
     atemps1[0] = tecoul / 60000;
     tecoul %= 60000;
