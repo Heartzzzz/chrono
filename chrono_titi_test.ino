@@ -1,18 +1,17 @@
-// définition des broches du décodeur 7 segments
-// bit_A = 2;
-// bit_B = 3;
-// bit_C = 4;
-// bit_D = 5;
-// définitions des broches des transistors pour chaque afficheur
-//latch_dizmin = 6;
-//latch_min = 7;
-//latch_dizsec = 8;
-//latch_sec = 9;
-//latch_dizcent = 10;
-//latch_cent = 11;
+// bit_A = broche 2; 1
+// bit_B = broche 3; 2
+// bit_C = broche 4; 4
+// bit_D = broche 5; 8
+//latch_dizmin = 11;
+//latch_min = 10;
+//latch_dizsec = 9;
+//latch_sec = 8;
+//latch_dizcent = 7;
+//latch_cent = 6;
 
 //Indice = digit, sous indice = n° du bit
-//Premier digit (indice 0) = gauche
+//Premier digit (indice 0) = droite(milliemes (indice 5) = dizaine minute
+
 //Premier bit (sous-indice 0) = poids FAIBLE
 byte digit[]={2,3,4,5}; //4 pins de l'écriture des 4 bits des décodeurs (en parallèle)
 byte latch[] = {6,7,8,9,10,11}; // 6 pins des latch des décodeurs
@@ -46,27 +45,24 @@ void setup()
     pinMode(startstop, INPUT_PULLUP);
     pinMode(bpreset, INPUT_PULLUP);
     
-    // Les broches sont toutes mises à l'état bas
+    // Les broches sont toutes mises à l'état haut
     digitalWrite(digit[0], LOW);
     digitalWrite(digit[1], LOW);
     digitalWrite(digit[2], LOW);
     digitalWrite(digit[3], LOW);
-    digitalWrite(latch[0], LOW);
-    digitalWrite(latch[1], LOW);
-    digitalWrite(latch[2], LOW);
-    digitalWrite(latch[3], LOW);
-    digitalWrite(latch[4], LOW);
-    digitalWrite(latch[5], LOW);
+    digitalWrite(latch[0], HIGH);
+    digitalWrite(latch[1], HIGH);
+    digitalWrite(latch[2], HIGH);
+    digitalWrite(latch[3], HIGH);
+    digitalWrite(latch[4], HIGH);
+    digitalWrite(latch[5], HIGH);
+
 }
 
 void loop ()
 {
-  etatss=digitalRead(startstop);
-  
-  if (etatss == LOW)
-    {
-      afficher_nombre();
-    }
+  calc_tps();
+  affiche_digits();
 }  
 
 void affiche_digits()
@@ -83,7 +79,8 @@ void affiche_digits()
  
 void calc_tps()
 {
-    t0 = millis(); //initialisation du t0
+    t0 = millis(); 
+
     tecoul = millis() - t0;       //decoupage puis soustraction des minutes
     atemps1[0] = tecoul / 60000;
     tecoul %= 60000;
@@ -99,34 +96,4 @@ void calc_tps()
     chiffre[3] = atemps1[1] / 10;// recup les dizaines de secondes
     chiffre[4] = atemps1[0] % 10;// recup les minutes
     chiffre[5] = atemps1[0] / 10;// recup les dizaines de minutes
-}
-
-
-void afficher(char chiffre) // fonction écrivant sur un seul afficheur
-{
-    digitalWrite(digit[0], LOW);
-    digitalWrite(digit[1], LOW);
-    digitalWrite(digit[2], LOW);
-    digitalWrite(digit[3], LOW);
-
-    if(chiffre >= 8)
-    {
-        digitalWrite(digit[3], HIGH);
-        chiffre = chiffre - 8;
-    }
-    if(chiffre >= 4)
-    {
-        digitalWrite(digit[2], HIGH);
-        chiffre = chiffre - 4;
-    }
-    if(chiffre >= 2)
-    {
-        digitalWrite(digit[1], HIGH);
-        chiffre = chiffre - 2;
-    }
-    if(chiffre >= 1)
-    {
-        digitalWrite(digit[0], HIGH);
-        chiffre = chiffre - 1;
-    }
 }
