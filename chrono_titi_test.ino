@@ -50,12 +50,12 @@ void setup()
     digitalWrite(digit[1], LOW);
     digitalWrite(digit[2], LOW);
     digitalWrite(digit[3], LOW);
-    digitalWrite(latch[0], HIGH);
-    digitalWrite(latch[1], HIGH);
-    digitalWrite(latch[2], HIGH);
-    digitalWrite(latch[3], HIGH);
-    digitalWrite(latch[4], HIGH);
-    digitalWrite(latch[5], HIGH);
+    digitalWrite(latch[0], LOW);
+    digitalWrite(latch[1], LOW);
+    digitalWrite(latch[2], LOW);
+    digitalWrite(latch[3], LOW);
+    digitalWrite(latch[4], LOW);
+    digitalWrite(latch[5], LOW);
 
 }
 
