@@ -95,5 +95,5 @@ void calc_tps()
     chiffre[3] = atemps1[1] / 10;// recup les dizaines de secondes
     chiffre[4] = atemps1[0] % 10;// recup les minutes
     chiffre[5] = atemps1[0] / 10;// recup les dizaines de minutes
-    return chiffre[1,2,3,4,5,6];
+    return chiffre[0,1,2,3,4,5];
 }
