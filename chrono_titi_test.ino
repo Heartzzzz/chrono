@@ -6,19 +6,18 @@
 //latch_min = 10;
 //latch_dizsec = 9;
 //latch_sec = 8;
-//latch_dizcent = 7;
-//latch_cent = 6;
+//latch_cent = 7;
+//latch_mil = 6;
 
 //Indice = digit, sous indice = n° du bit
 //Premier digit (indice 0) = droite(milliemes (indice 5) = dizaine minute
 
 //Premier bit (sous-indice 0) = poids FAIBLE
-byte digit[]={2,3,4,5}; //4 pins de l'écriture des 4 bits des décodeurs (en parallèle)
+byte digit[]={2,3,4,5}; //4 bits des décodeurs BCD 0=1 1=2 2=4 3=8
 byte latch[] = {6,7,8,9,10,11}; // 6 pins des latch des décodeurs
 
-int chiffre[] = {0,0,0,0,0,0}; //nombres à afficher en façade
-int rtemps1[3] = {0,0,0}; //listes contenant MM,SS,dc 
-int atemps1[3] = {0,0,0}; //liste contenant le temps rtemps1 mais modifiee pour l'affichage
+int chiffre[] = {0,0,0,0,0,0}; //nombres à afficher en façade (ms cs s ds m dm)
+int atemps1[3] = {0,0,0}; //liste contenant le temps modifiee pour l'affichage 0=m 1=s 2=c
 
 const int startstop = 12; // bouton poussoir start/stop connecté àa la masse si appuyer
 const int bpreset = 13; //bouton poussoir reset connecté àa la masse si appuyer
@@ -70,7 +69,7 @@ void affiche_digits()
     for(byte i=0; i<6; i++)
     {
         for(byte n=0; n<4; n++)
-            digitalWrite(digit[n], bitRead(chiffre[i],n));
+        digitalWrite(digit[n], bitRead(chiffre[i],n));
         //Latch
         digitalWrite(latch[i],1);
         digitalWrite(latch[i],0);
@@ -96,4 +95,5 @@ void calc_tps()
     chiffre[3] = atemps1[1] / 10;// recup les dizaines de secondes
     chiffre[4] = atemps1[0] % 10;// recup les minutes
     chiffre[5] = atemps1[0] / 10;// recup les dizaines de minutes
+    return chiffre[1,2,3,4,5,6];
 }
